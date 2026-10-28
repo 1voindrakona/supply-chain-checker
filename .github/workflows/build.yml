@@ -16,13 +16,11 @@ jobs:
         run: cmake -B build -S .
         
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: checker-${{ matrix.os }}
-          path: |
-            build/Release/supply-chain-checker.exe
-            build/supply-chain-checker
+          path: build/
           if-no-files-found: ignore
