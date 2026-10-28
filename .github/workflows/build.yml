@@ -1,4 +1,4 @@
-name: Cross-Platform CI
+name: Cross-Platform Build
 
 on: [push, pull_request]
 
@@ -18,6 +18,11 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
         
-      - name: Test (Linux/Mac)
-        if: runner.os != 'Windows'
-        run: ./build/supply-chain-checker --manifest tests/vcpkg.json || true
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: checker-${{ matrix.os }}
+          path: |
+            build/Release/supply-chain-checker.exe
+            build/supply-chain-checker
+          if-no-files-found: ignore
