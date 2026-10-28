@@ -1,0 +1,14 @@
+allowed_packages:
+  - cpp:fmt
+  - cpp:spdlog
+  - cpp:zlib
+  - npm:express
+  - npm:lodash
+  - pypi:requests
+  - pypi:flask
+
+denied_packages:
+  - npm:event-stream
+  - pypi:reqeusts
+
+max_typosquat_distance: 2

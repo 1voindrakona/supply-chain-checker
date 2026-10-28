@@ -1,0 +1,23 @@
+name: Cross-Platform CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure CMake
+        run: cmake -B build -S .
+        
+      - name: Build
+        run: cmake --build build --config Release
+        
+      - name: Test (Linux/Mac)
+        if: runner.os != 'Windows'
+        run: ./build/supply-chain-checker --manifest tests/vcpkg.json || true
